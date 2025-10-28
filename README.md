@@ -1,73 +1,174 @@
-# Welcome to your Lovable project
+# MediManager - Sistema de Gestión de Citas Médicas
 
-## Project info
+Sistema completo de gestión de citas médicas que permite administrar pacientes, médicos y citas de manera eficiente y segura.
 
-**URL**: https://lovable.dev/projects/c856f072-de22-4722-ba47-a2a3524b27fb
+## 🚀 Características Principales
 
-## How can I edit this code?
+- **Gestión de Pacientes**: Registro completo con historial médico, información de contacto y datos personales
+- **Gestión de Médicos**: Administración de profesionales médicos con especialidades y disponibilidad
+- **Sistema de Citas**: Programación, edición y seguimiento de citas médicas con filtros avanzados
+- **Dashboard Analítico**: Vista general con estadísticas en tiempo real
+- **Autenticación Segura**: Sistema de login/registro con roles (Admin, Staff, User)
+- **Control de Acceso**: Políticas RLS (Row Level Security) para protección de datos
+- **Responsive Design**: Interfaz adaptable a todos los dispositivos
 
-There are several ways of editing your application.
+## 📋 Requisitos
 
-**Use Lovable**
+- Node.js 18+ 
+- npm o bun
+- Cuenta en Lovable Cloud (backend incluido)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c856f072-de22-4722-ba47-a2a3524b27fb) and start prompting.
+## 🛠️ Instalación
 
-Changes made via Lovable will be committed automatically to this repo.
+### Clonar el repositorio
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+git clone <URL_DEL_REPOSITORIO>
+cd medimanager
 ```
 
-**Edit a file directly in GitHub**
+### Instalar dependencias
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm install
+# o
+bun install
+```
 
-**Use GitHub Codespaces**
+### Configurar variables de entorno
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+El archivo `.env` se genera automáticamente con Lovable Cloud. Contiene:
 
-## What technologies are used for this project?
+```env
+VITE_SUPABASE_URL=<tu_url>
+VITE_SUPABASE_PUBLISHABLE_KEY=<tu_key>
+VITE_SUPABASE_PROJECT_ID=<tu_project_id>
+```
 
-This project is built with:
+### Ejecutar en desarrollo
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```bash
+npm run dev
+# o
+bun dev
+```
 
-## How can I deploy this project?
+La aplicación estará disponible en `http://localhost:5173`
 
-Simply open [Lovable](https://lovable.dev/projects/c856f072-de22-4722-ba47-a2a3524b27fb) and click on Share -> Publish.
+## 👥 Usuarios y Roles
 
-## Can I connect a custom domain to my Lovable project?
+El sistema implementa tres niveles de acceso:
 
-Yes, you can!
+### Admin
+- Email: `isaias.burga@gmail.com`
+- Contraseña: `*Familia99`
+- Permisos: Acceso completo, puede eliminar registros
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Staff
+- Cualquier usuario registrado que no sea admin
+- Permisos: Puede crear y editar pacientes, médicos y citas
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### User
+- Rol base para usuarios autenticados
+- Permisos: Solo lectura
+
+## 📚 Documentación Adicional
+
+- [Manual de Usuario](./docs/USER_MANUAL.md) - Guía completa de uso de la aplicación
+- [Documentación de Base de Datos](./docs/DATABASE.md) - Esquema y estructura de datos
+- [Guía de Desarrollo](./docs/DEVELOPMENT.md) - Arquitectura y convenciones del código
+
+## 🏗️ Tecnologías
+
+- **Frontend**: React 18 + TypeScript
+- **Build Tool**: Vite
+- **UI Framework**: Tailwind CSS
+- **Componentes**: shadcn/ui
+- **Backend**: Lovable Cloud (Supabase)
+- **Autenticación**: Supabase Auth
+- **Base de Datos**: PostgreSQL
+- **Validación**: Zod
+- **Routing**: React Router v6
+- **State Management**: React Query (TanStack Query)
+
+## 📁 Estructura del Proyecto
+
+```
+medimanager/
+├── src/
+│   ├── components/        # Componentes reutilizables
+│   │   ├── ui/           # Componentes shadcn/ui
+│   │   ├── AuthGuard.tsx # Protección de rutas
+│   │   └── Navigation.tsx# Navegación principal
+│   ├── pages/            # Páginas de la aplicación
+│   │   ├── Dashboard.tsx
+│   │   ├── Auth.tsx
+│   │   ├── Patients.tsx
+│   │   ├── Doctors.tsx
+│   │   └── Appointments.tsx
+│   ├── integrations/     # Configuración de Supabase
+│   ├── hooks/            # Custom hooks
+│   ├── lib/              # Utilidades
+│   └── index.css         # Estilos globales
+├── supabase/
+│   ├── migrations/       # Migraciones de BD
+│   └── config.toml       # Configuración Supabase
+└── docs/                 # Documentación
+```
+
+## 🔒 Seguridad
+
+- **RLS Policies**: Todas las tablas tienen políticas de seguridad a nivel de fila
+- **Validación de Datos**: Validación con Zod en cliente
+- **Autenticación JWT**: Tokens seguros manejados por Supabase
+- **HTTPS**: Comunicaciones encriptadas
+- **Security Definer Functions**: Funciones seguras para verificación de roles
+
+## 🚢 Despliegue
+
+### Lovable (Recomendado)
+
+1. Abre el proyecto en [Lovable](https://lovable.dev)
+2. Click en Share → Publish
+3. Tu app estará en línea automáticamente
+
+### Vercel/Netlify
+
+```bash
+npm run build
+# Despliega la carpeta dist/
+```
+
+## 🤝 Contribución
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📝 Licencia
+
+Este proyecto está bajo la Licencia MIT.
+
+## 👨‍💻 Autor
+
+Desarrollado con ❤️ usando Lovable
+
+## 🐛 Reporte de Bugs
+
+Si encuentras algún bug, por favor abre un issue en el repositorio con:
+- Descripción del problema
+- Pasos para reproducirlo
+- Comportamiento esperado vs actual
+- Screenshots si aplica
+
+## 📞 Soporte
+
+Para soporte, contacta a través de:
+- GitHub Issues
+- Email del administrador
+
+---
+
+**Nota**: Este proyecto utiliza Lovable Cloud para el backend. No necesitas configurar Supabase manualmente.
